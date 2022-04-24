@@ -19,7 +19,7 @@ message Table {
 }
 
 message Schema {
-  repeated ColumnFamily column_family = 1;
+  map<string,ColumnFamily> column_family = 1;
 }
 
 message ColumnFamily {
