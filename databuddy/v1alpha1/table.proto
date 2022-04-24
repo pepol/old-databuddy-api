@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package databuddy.v1alpha1;
+
+import "databuddy/v1alpha1/util.proto";
+
+service TableService {
+  rpc ListTables(ListTablesRequest) returns (ListTablesResponse) {}
+  rpc GetTable(GetTableRequest) returns (GetTableResponse) {}
+  rpc CreateTable(CreateTableRequest) returns (CreateTableResponse) {}
+  rpc ModifyTable(ModifyTableRequest) returns (ModifyTableResponse) {}
+  rpc DeleteTable(DeleteTableRequest) returns (DeleteTableResponse) {}
+}
+
+message Table {
+  TableMetadata metadata = 1;
+  TableSpec spec = 2;
+  TableStatus status = 3;
+}
+
+message TableMetadata {
+  string name = 1;
+}
+
+message TableSpec {
+  enum Replication {
+    REPLICATION_UNSPECIFIED = 0;
+    REPLICATION_LOCAL = 1;
+    REPLICATION_REGIONAL = 2;
+    REPLICATION_GLOBAL = 3;
+  }
+
+  string schema_id = 1;
+  Replication replication = 2;
+}
+
+message TableStatus {
+  message Sizes {
+    uint64 on_disk = 1;
+  }
+
+  Timestamps times = 1;
+  Sizes sizes = 2;
+}
+
+// RPC types:
+
+message ListTablesRequest {}
+
+message ListTablesResponse {
+  repeated TableMetadata table = 1;
+}
+
+message GetTableRequest {
+  string name = 1;
+}
+
+message GetTableResponse {
+  Table table = 1;
+}
+
+message CreateTableRequest {
+  string name = 1;
+  TableSpec spec = 2;
+}
+
+message CreateTableResponse {
+  Table table = 1;
+}
+
+message ModifyTableRequest {
+  string name = 1;
+  TableSpec spec = 2;
+}
+
+message ModifyTableResponse {
+  Table table = 1;
+}
+
+message DeleteTableRequest {
+  string name = 1;
+}
+
+message DeleteTableResponse {}

@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package databuddy.v1alpha1;
+
+import "google/protobuf/timestamp.proto";
+
+message Timestamps {
+  google.protobuf.Timestamp created_at = 1;
+  google.protobuf.Timestamp modified_at = 2;
+}
