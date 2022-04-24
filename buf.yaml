@@ -5,9 +5,6 @@ deps:
 breaking:
   use:
     - FILE
-  except:
-    - FIELD_NO_DELETE
-    - FIELD_NO_DELETE_UNLESS_NUMBER_RESERVED
 lint:
   use:
     - DEFAULT
