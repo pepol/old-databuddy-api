@@ -18,6 +18,22 @@ message Table {
   TableStatus status = 3;
 }
 
+message Schema {
+  repeated ColumnFamily column_family = 1;
+}
+
+message ColumnFamily {
+  string name = 1;
+  GCPolicy gc_policy = 2;
+}
+
+message GCPolicy {
+  oneof policy {
+    int64 max_age = 1;
+    int64 max_versions = 2;
+  }
+}
+
 message TableMetadata {
   string name = 1;
 }
@@ -30,8 +46,11 @@ message TableSpec {
     REPLICATION_GLOBAL = 3;
   }
 
-  string schema_id = 1;
   Replication replication = 2;
+  Schema schema = 3;
+
+  reserved 1;
+  reserved "schema_id";
 }
 
 message TableStatus {
