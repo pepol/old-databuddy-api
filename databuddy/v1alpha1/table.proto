@@ -46,11 +46,8 @@ message TableSpec {
     REPLICATION_GLOBAL = 3;
   }
 
+  Schema schema = 1;
   Replication replication = 2;
-  Schema schema = 3;
-
-  reserved 1;
-  reserved "schema_id";
 }
 
 message TableStatus {
