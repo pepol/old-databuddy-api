@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package databuddy.v1alpha1;
+
+import "databuddy/v1alpha1/table.proto";
+
+service RowService {
+  rpc ListRows(ListRowsRequest) returns (ListRowsResponse) {}
+  rpc GetRows(stream GetRowsRequest) returns (stream GetRowsResponse) {}
+  rpc PutRows(stream PutRowsRequest) returns (stream PutRowsResponse) {}
+  rpc DeleteRows(stream DeleteRowsRequest) returns (stream DeleteRowsResponse) {}
+  rpc DeleteFields(stream DeleteFieldsRequest) returns (stream DeleteFieldsResponse) {}
+}
+
+message RowMetadata {
+  string id = 1;
+  TableMetadata table = 2;
+}
+
+message Field {
+  FieldKey key = 1;
+  bytes value = 2;
+}
+
+message FieldKey {
+  string family = 1;
+  string qualifier = 2;
+}
+
+// RPC types:
+
+message ListRowsRequest {
+  string prefix = 1;
+  TableMetadata table = 2;
+}
+
+message ListRowsResponse {
+  repeated RowMetadata rows = 1;
+}
+
+message GetRowsRequest {
+  RowMetadata row = 1;
+}
+
+message GetRowsResponse {
+  RowMetadata row = 1;
+  repeated Field fields = 2;
+}
+
+message PutRowsRequest {
+  RowMetadata row = 1;
+  repeated Field fields = 2;
+}
+
+message PutRowsResponse {
+  RowMetadata row = 1;
+  repeated Field fields = 2;
+}
+
+message DeleteRowsRequest {
+  RowMetadata row = 1;
+}
+
+message DeleteRowsResponse {
+  RowMetadata row = 1;
+  repeated Field fields = 2;
+}
+
+message DeleteFieldsRequest {
+  RowMetadata row = 1;
+  FieldKey field = 2;
+}
+
+message DeleteFieldsResponse {
+  RowMetadata row = 1;
+  Field field = 2;
+}
